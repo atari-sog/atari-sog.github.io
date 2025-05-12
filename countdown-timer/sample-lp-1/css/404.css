@@ -1,0 +1,72 @@
+.error-container {
+    text-align: center;
+    padding: 80px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.error-title {
+    font-size: 8rem;
+    font-weight: 700;
+    color: #0a51cc;
+    margin: 0;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+}
+
+.error-title::after {
+    content: \"\";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(135deg, #0a51cc 0%, #0a84ff 100%);
+}
+
+.error-subtitle {
+    font-size: 1.8rem;
+    margin: 30px 0 20px;
+    color: #333;
+}
+
+.error-message {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.error-timer {
+    background-color: #f2f9ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 12px rgba(10, 81, 204, 0.1);
+}
+
+.error-timer-title {
+    font-size: 1.3rem;
+    color: #0a51cc;
+    margin-bottom: 15px;
+}
+
+.error-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, #0a51cc 0%, #0a84ff 100%);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 12px rgba(10, 81, 204, 0.2);
+}
+
+.error-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(10, 81, 204, 0.3);
+}
