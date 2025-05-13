@@ -94,32 +94,8 @@ function initializeTimer() {
     const timerInterval = setInterval(updateTimer, 1000);
 }
 
-// デバッグ用（コンソールにタイマー情報を表示）
-function debugTimer() {
-    const cookieValue = getCookie(COOKIE_NAME);
-    if (cookieValue) {
-        const firstAccess = parseInt(cookieValue);
-        const endTime = firstAccess + TIMER_DURATION;
-        const currentTime = Date.now();
-        const remainingTime = endTime - currentTime;
-        
-        console.log('初回アクセス時間:', new Date(firstAccess).toLocaleString());
-        console.log('終了時間:', new Date(endTime).toLocaleString());
-        console.log('現在時間:', new Date(currentTime).toLocaleString());
-        console.log('残り時間(ミリ秒):', remainingTime);
-        console.log('残り時間(時:分:秒):', 
-            Math.floor(remainingTime / (1000 * 60 * 60)) + '時間 ' +
-            Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60)) + '分 ' +
-            Math.floor((remainingTime % (1000 * 60)) / 1000) + '秒'
-        );
-    } else {
-        console.log('Cookie未設定');
-    }
-}
-
-// ページ読み込み時に一度だけデバッグ情報を出力
+// ページ読み込み時にタイマーを初期化
 document.addEventListener('DOMContentLoaded', function() {
-    debugTimer();
-    // タイマー機能の初期化
+    // タイマー機能を初期化
     initializeTimer();
 });
