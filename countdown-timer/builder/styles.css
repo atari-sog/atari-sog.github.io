@@ -241,6 +241,113 @@ ul, ol {
     background-color: #0a51cc;
 }
 
+/* カラーセレクター */
+.color-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.color-option {
+    position: relative;
+}
+
+.color-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.color-preview {
+    display: block;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.color-preview:hover {
+    border-color: #0a84ff;
+    box-shadow: 0 4px 15px rgba(10, 132, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.color-option input[type="radio"]:checked + .color-preview {
+    border-color: #0a84ff;
+    box-shadow: 0 4px 15px rgba(10, 132, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.color-sample {
+    margin-bottom: 8px;
+}
+
+.sample-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.7rem;
+    gap: 4px;
+    min-height: 60px;
+    justify-content: center;
+}
+
+.sample-text {
+    font-weight: 500;
+}
+
+.sample-timer {
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.sample-button {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.6rem;
+    font-weight: 600;
+}
+
+.color-name {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+}
+
+/* カラーバリエーション */
+.color-preview-blue .sample-banner {
+    background: linear-gradient(135deg, #0a51cc 0%, #0a84ff 100%);
+}
+
+.color-preview-white .sample-banner {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    color: #333;
+    border: 1px solid #e1e4e8;
+}
+
+.color-preview-white .sample-button {
+    background: rgba(10, 132, 255, 0.1);
+    color: #0a84ff;
+}
+
+.color-preview-orange .sample-banner {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff9500 100%);
+}
+
+.color-preview-black .sample-banner {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+}
+
 /* プレビュー */
 .preview-container {
     margin-top: 40px;
@@ -292,5 +399,49 @@ ul, ol {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
+    }
+    
+    .color-selector {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+    }
+    
+    .color-preview {
+        padding: 8px;
+    }
+    
+    .sample-banner {
+        min-height: 50px;
+        font-size: 0.6rem;
+    }
+    
+    .sample-timer {
+        font-size: 0.7rem;
+    }
+    
+    .color-name {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .color-selector {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
+    .sample-banner {
+        min-height: 45px;
+        padding: 6px;
+    }
+    
+    .sample-text,
+    .sample-timer {
+        font-size: 0.55rem;
+    }
+    
+    .sample-button {
+        font-size: 0.5rem;
+        padding: 2px 6px;
     }
 }

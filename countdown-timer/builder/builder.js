@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="container">
         <div class="timer-content">
             <div class="timer-text">
-                <p><strong>初回限定特別価格！残り時間：</strong></p>
+                <p><strong>{{BANNER_TEXT}}</strong></p>
             </div>
             <div class="timer" id="countdown">
                 <div class="timer-block">
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
             <div class="timer-cta">
-                <a href="#" class="timer-button">今すぐ購入する</a>
+                <a href="#" class="timer-button">{{CTA_BUTTON_TEXT}}</a>
             </div>
         </div>
     </div>
@@ -340,14 +340,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });`;
 
     // CSSテンプレート
-    const cssTemplate = `/* タイマーバナー */
+    const cssTemplateBase = `/* タイマーバナー */
 .timer-banner {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(135deg, #0a51cc 0%, #0a84ff 100%);
-    color: white;
+    {{BANNER_STYLES}}
     padding: 15px 0;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
@@ -377,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.15);
+    {{TIMER_BLOCK_STYLES}}
     padding: 8px 12px;
     border-radius: 6px;
     min-width: 60px;
@@ -406,19 +405,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .timer-button {
     display: inline-block;
-    background: linear-gradient(135deg, #ff3b30 0%, #ff9500 100%);
-    color: white;
+    {{CTA_BUTTON_STYLES}}
     font-size: 1rem;
     font-weight: 700;
     padding: 10px 24px;
     border-radius: 50px;
     transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 10px rgba(255, 59, 48, 0.2);
+    {{CTA_BUTTON_SHADOW}}
 }
 
 .timer-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(255, 59, 48, 0.3);
+    {{CTA_BUTTON_HOVER_SHADOW}}
 }
 
 /* タイマーバナーのモバイル対応 */
@@ -468,6 +466,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }`;
     
+    // カラーバリエーション定義
+    const colorVariations = {
+        blue: {
+            bannerStyles: 'background: linear-gradient(135deg, #0a51cc 0%, #0a84ff 100%);\n    color: white;',
+            timerBlockStyles: 'background-color: rgba(255, 255, 255, 0.15);',
+            ctaButtonStyles: 'background: linear-gradient(135deg, #ff3b30 0%, #ff9500 100%);\n    color: white;',
+            ctaButtonShadow: 'box-shadow: 0 4px 10px rgba(255, 59, 48, 0.2);',
+            ctaButtonHoverShadow: 'box-shadow: 0 6px 15px rgba(255, 59, 48, 0.3);'
+        },
+        white: {
+            bannerStyles: 'background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);\n    color: #333;\n    border-top: 1px solid #e1e4e8;',
+            timerBlockStyles: 'background-color: rgba(10, 132, 255, 0.1);\n    color: #0a84ff;',
+            ctaButtonStyles: 'background: linear-gradient(135deg, #0a51cc 0%, #0a84ff 100%);\n    color: white;',
+            ctaButtonShadow: 'box-shadow: 0 4px 10px rgba(10, 84, 255, 0.2);',
+            ctaButtonHoverShadow: 'box-shadow: 0 6px 15px rgba(10, 84, 255, 0.3);'
+        },
+        orange: {
+            bannerStyles: 'background: linear-gradient(135deg, #ff6b35 0%, #ff9500 100%);\n    color: white;',
+            timerBlockStyles: 'background-color: rgba(255, 255, 255, 0.2);',
+            ctaButtonStyles: 'background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);\n    color: #ff6b35;\n    border: 2px solid rgba(255, 255, 255, 0.3);',
+            ctaButtonShadow: 'box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);',
+            ctaButtonHoverShadow: 'box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);'
+        },
+        black: {
+            bannerStyles: 'background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);\n    color: white;',
+            timerBlockStyles: 'background-color: rgba(255, 255, 255, 0.1);',
+            ctaButtonStyles: 'background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);\n    color: #333;',
+            ctaButtonShadow: 'box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);',
+            ctaButtonHoverShadow: 'box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);'
+        }
+    };
+    
     // フォームの送信イベント
     timerForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -496,6 +526,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // 他の設定値を取得
+        const bannerText = document.getElementById('bannerText').value;
+        const ctaButtonText = document.getElementById('ctaButtonText').value;
+        const colorTheme = document.querySelector('input[name="colorTheme"]:checked').value;
         const cookieName = document.getElementById('cookieName').value;
         const cookieDuration = parseInt(document.getElementById('cookieDuration').value) || 90;
         const redirectPage = document.getElementById('redirectPage').value;
@@ -507,6 +540,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // HTMLを生成
         const generatedHtml = htmlTemplate
+            .replace(/{{BANNER_TEXT}}/g, bannerText)
+            .replace(/{{CTA_BUTTON_TEXT}}/g, ctaButtonText)
             .replace(/{{TIMER_BANNER_ID}}/g, timerBannerId)
             .replace(/{{HOURS_ELEMENT_ID}}/g, hoursElementId)
             .replace(/{{MINUTES_ELEMENT_ID}}/g, minutesElementId)
@@ -530,8 +565,16 @@ document.addEventListener('DOMContentLoaded', function() {
             .replace(/{{TIMER_DURATION_COMMENT}}/g, durationComment)
             .replace(/{{COOKIE_NAME}}/g, cookieName);
         
-        // CSSを生成
-        const generatedCss = cssTemplate;
+        // 選択されたカラーバリエーションを取得
+        const selectedColorVariation = colorVariations[colorTheme];
+        
+        // CSSを生成（カラーバリエーションを適用）
+        const generatedCss = cssTemplateBase
+            .replace(/{{BANNER_STYLES}}/g, selectedColorVariation.bannerStyles)
+            .replace(/{{TIMER_BLOCK_STYLES}}/g, selectedColorVariation.timerBlockStyles)
+            .replace(/{{CTA_BUTTON_STYLES}}/g, selectedColorVariation.ctaButtonStyles)
+            .replace(/{{CTA_BUTTON_SHADOW}}/g, selectedColorVariation.ctaButtonShadow)
+            .replace(/{{CTA_BUTTON_HOVER_SHADOW}}/g, selectedColorVariation.ctaButtonHoverShadow);
         
         // 出力を設定
         htmlOutput.textContent = generatedHtml;

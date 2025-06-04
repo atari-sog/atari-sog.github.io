@@ -68,6 +68,80 @@
                         <h3>HTMLカスタマイズ</h3>
                         
                         <div class="input-group">
+                            <label for="bannerText">バナー文言：</label>
+                            <input type="text" id="bannerText" value="初回限定特別価格！残り時間：">
+                            <span class="help-text">タイマーバナーに表示するメインテキストを指定します</span>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="ctaButtonText">CTAボタン文言：</label>
+                            <input type="text" id="ctaButtonText" value="今すぐ購入する">
+                            <span class="help-text">CTAボタンに表示するテキストを指定します</span>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>カラーバリエーション：</label>
+                            <div class="color-selector">
+                                <div class="color-option">
+                                    <input type="radio" id="colorBlue" name="colorTheme" value="blue" checked>
+                                    <label for="colorBlue" class="color-preview color-preview-blue">
+                                        <div class="color-sample">
+                                            <div class="sample-banner">
+                                                <span class="sample-text">残り時間</span>
+                                                <div class="sample-timer">00:00:00</div>
+                                                <div class="sample-button">購入する</div>
+                                            </div>
+                                        </div>
+                                        <span class="color-name">ブルー（現在）</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="color-option">
+                                    <input type="radio" id="colorWhite" name="colorTheme" value="white">
+                                    <label for="colorWhite" class="color-preview color-preview-white">
+                                        <div class="color-sample">
+                                            <div class="sample-banner">
+                                                <span class="sample-text">残り時間</span>
+                                                <div class="sample-timer">00:00:00</div>
+                                                <div class="sample-button">購入する</div>
+                                            </div>
+                                        </div>
+                                        <span class="color-name">ホワイト</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="color-option">
+                                    <input type="radio" id="colorOrange" name="colorTheme" value="orange">
+                                    <label for="colorOrange" class="color-preview color-preview-orange">
+                                        <div class="color-sample">
+                                            <div class="sample-banner">
+                                                <span class="sample-text">残り時間</span>
+                                                <div class="sample-timer">00:00:00</div>
+                                                <div class="sample-button">購入する</div>
+                                            </div>
+                                        </div>
+                                        <span class="color-name">オレンジ</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="color-option">
+                                    <input type="radio" id="colorBlack" name="colorTheme" value="black">
+                                    <label for="colorBlack" class="color-preview color-preview-black">
+                                        <div class="color-sample">
+                                            <div class="sample-banner">
+                                                <span class="sample-text">残り時間</span>
+                                                <div class="sample-timer">00:00:00</div>
+                                                <div class="sample-button">購入する</div>
+                                            </div>
+                                        </div>
+                                        <span class="color-name">ブラック</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <span class="help-text">タイマーバナーの色合いを選択してください</span>
+                        </div>
+                        
+                        <div class="input-group">
                             <label for="timerBannerId">タイマーバナーID：</label>
                             <input type="text" id="timerBannerId" value="timerBanner">
                             <span class="help-text">タイマーバナー要素のIDを指定します</span>
