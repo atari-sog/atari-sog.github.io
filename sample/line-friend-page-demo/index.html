@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Wi-Fi | ポケットWi-FiルーターLP</title>
+    <style>
+        /* --- ベーススタイル --- */
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f4f7f6;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        a {
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        /* --- 共通クラス --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 通常ボタン（申し込み等） */
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #ff3b30; /* 目立つ赤/オレンジ系 */
+            color: #fff;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
+        }
+        .btn:hover {
+            background-color: #ff6b61;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(255, 59, 48, 0.4);
+        }
+
+        /* LINEボタン用スタイル */
+        .btn-line {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #06C755; /* LINE公式カラー */
+            color: #fff;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(6, 199, 85, 0.3);
+            margin-top: 10px;
+        }
+        .btn-line:hover {
+            background-color: #05b34c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(6, 199, 85, 0.4);
+        }
+        /* LINEアイコンをCSSで簡易表現（白い吹き出し） */
+        .icon-line {
+            display: inline-block;
+            width: 20px;
+            height: 18px;
+            background-color: #fff;
+            border-radius: 50% 50% 5% 50%; /* 吹き出し型 */
+            margin-right: 10px;
+            transform: rotate(45deg);
+            position: relative;
+            top: -2px;
+        }
+        .icon-line::after {
+            /* 吹き出しの角度を戻す補正 */
+             content: '';
+             display: block;
+             transform: rotate(-45deg); 
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #0056b3;
+            font-weight: 700;
+        }
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+
+        /* --- ヘッダー --- */
+        header {
+            background: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #0056b3;
+            letter-spacing: -0.5px;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        nav li {
+            margin-left: 20px;
+        }
+        nav a.nav-link {
+            color: #555;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        /* ヘッダー内の小さいLINEボタン */
+        .btn-line-sm {
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            background-color: #06C755;
+            color: white;
+            border-radius: 4px;
+        }
+
+        /* --- ヒーローセクション --- */
+        .hero {
+            /* 青系のグラデーション */
+            background: linear-gradient(120deg, #0056b3 0%, #00a8cc 100%);
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            color: #fff;
+        }
+        .hero-text {
+            flex: 1;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .hero .highlight {
+            color: #ffdf00; /* 黄色で強調 */
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .hero-image-box {
+            flex: 1;
+            height: 400px;
+            background-color: rgba(255,255,255,0.1);
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* --- 特徴セクション --- */
+        .features {
+            padding: 80px 0;
+            background-color: #fff;
+        }
+        .features-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        .feature-item {
+            flex: 1;
+            text-align: center;
+            padding: 30px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid #0056b3;
+        }
+        .feature-num {
+            display: inline-block;
+            background-color: #e3f2fd;
+            color: #0056b3;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        .feature-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* --- プラン/端末紹介（画像＋テキスト） --- */
+        .product-section {
+            padding: 80px 0;
+            background-color: #f4f7f6;
+        }
+        .product-box {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex;
+        }
+        .product-img {
+            flex: 1;
+            min-height: 300px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+        }
+        .product-info {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .product-info h3 {
+            font-size: 1.8rem;
+            color: #0056b3;
+            margin-top: 0;
+        }
+        .spec-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .spec-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .spec-list li strong {
+            margin-right: 10px;
+            color: #333;
+        }
+
+        /* --- キャンペーンバナー風 --- */
+        .campaign-banner {
+            background-color: #fff3cd;
+            border: 2px solid #ffecb5;
+            color: #856404;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* --- CTAセクション --- */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(to bottom, #0056b3, #003d80);
+            text-align: center;
+            color: #fff;
+        }
+        .cta-box {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            display: inline-block;
+            width: 100%;
+            max-width: 700px;
+        }
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .cta-note {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        /* --- フッター --- */
+        footer {
+            background-color: #222;
+            color: #999;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.8rem;
+        }
+
+        /* --- レスポンシブ対応 --- */
+        @media (max-width: 768px) {
+            .hero { padding: 100px 0 60px; text-align: center; }
+            .hero-content { flex-direction: column; }
+            .hero h1 { font-size: 2.2rem; }
+            .features-grid { flex-direction: column; }
+            .product-box { flex-direction: column; }
+            .product-img { height: 250px; }
+            .header-inner nav { display: none; } /* 簡易的にスマホメニュー非表示 */
+            .logo { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <div class="container header-inner">
+            <div class="logo">Speed Wi-Fi</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link">料金プラン</a></li>
+                    <li><a href="#" class="nav-link">端末情報</a></li>
+                    <!-- ヘッダーにも小さくLINEボタン -->
+                    <li>
+                        <a href="https://friend-flow-analytics.g-biztech.workers.dev/miniapp/2007585849-XlagmEgB" data-line-friend-btn class="btn-line-sm">LINEで質問</a>
+                    </li>
+                    <li><a href="#" class="btn" style="padding: 8px 20px; font-size: 0.9rem; margin-left: 10px;">お申し込み</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <p>工事不要・届いてすぐに使える</p>
+                <h1>家でも外でも<br><span class="highlight">データ容量無制限</span></h1>
+                <p>月額 2,980円（税込）〜。契約期間の縛りなし。<br>今なら初月無料キャンペーン実施中！</p>
+                
+                <div style="margin-top: 30px;">
+                    <a href="#" class="btn">今すぐ申し込む</a>
+                </div>
+            </div>
+            <div class="hero-image-box">
+                <!-- ここにルーターや利用シーンの画像 -->
+                <div>
+                    <br>
+                    端末イメージ
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特徴セクション -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Speed Wi-Fiが選ばれる理由</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-num">Reason 01</span>
+                    <h3>工事不要で即日利用</h3>
+                    <p>面倒な回線工事は一切不要。端末が届いたその日に、電源を入れるだけでWi-Fiが繋がります。</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-num">Reason 02</span>
+                    <h3>超高速通信</h3>
+                    <p>最新の通信技術を採用し、動画もゲームもサクサク。ストレスフリーなインターネット環境を提供します。</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-num">Reason 03</span>
+                    <h3>持ち運び自由</h3>
+                    <p>コンパクトな手のひらサイズ。自宅はもちろん、カフェや出張先など、どこでもネットが使い放題です。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 商品紹介セクション -->
+    <section class="product-section">
+        <div class="container">
+            <h2 class="section-title">最新端末スペック</h2>
+            <div class="product-box">
+                <div class="product-img">
+                    <!-- 端末画像 -->
+                    [Image of Device]
+                </div>
+                <div class="product-info">
+                    <div class="campaign-banner">
+                        今なら端末代金 実質0円キャンペーン中！
+                    </div>
+                    <h3>SW-Next Gen 5G</h3>
+                    <p>5G対応の最新モデル。バッテリー長持ちで、外出先でも安心して一日中使えます。</p>
+                    <ul class="spec-list">
+                        <li><strong>通信速度</strong> 下り最大 2.7Gbps</li>
+                        <li><strong>同時接続</strong> 最大 16台</li>
+                        <li><strong>重量</strong> 約 120g</li>
+                        <li><strong>バッテリー</strong> 連続通信 12時間</li>
+                    </ul>
+                    <a href="#" style="color: #0056b3; font-weight: bold; text-decoration: underline;">詳しいスペックを見る &gt;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTAセクション（申し込み & LINE） -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>快適なネット生活を始めよう</h2>
+                <p>Webからのお申し込みは24時間受付中。<br>最短即日発送いたします。</p>
+                
+                <div class="cta-buttons">
+                    <!-- メインCV: 申し込み -->
+                    <a href="#" class="btn" style="width: 100%; max-width: 400px; font-size: 1.3rem;">
+                        Webから3分で申し込む
+                    </a>
+
+                    <!-- サブCV: LINE友だち追加 -->
+                    <a href="https://friend-flow-analytics.g-biztech.workers.dev/miniapp/2007585849-XlagmEgB" data-line-friend-btn class="btn-line" style="width: 100%; max-width: 400px;">
+                        <span class="icon-line"></span>
+                        LINEでクーポンを受け取る
+                    </a>
+                </div>
+
+                <p class="cta-note">
+                    ※LINE友だち追加で「事務手数料無料クーポン」配布中！<br>
+                    契約前の不明点もLINEチャットでサクッと解決できます。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <div class="container">
+            <p style="margin-bottom: 10px;">
+                <a href="#" style="color: #999; margin: 0 10px;">運営会社</a> | 
+                <a href="#" style="color: #999; margin: 0 10px;">プライバシーポリシー</a> | 
+                <a href="#" style="color: #999; margin: 0 10px;">特定商取引法に基づく表記</a>
+            </p>
+            <p>&copy; 2024 Speed Wi-Fi All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function(d,s,src,cfg){
+        const j=d.createElement(s);j.async=true;j.src=src;
+        j.onload=function(){window.FriendFlow&&window.FriendFlow.init(cfg);};
+        d.head.appendChild(j);
+        })(document,'script','https://friend-flow-analytics.g-biztech.workers.dev/line-friend-sdk.js',{
+        target_selector: '[data-line-friend-btn]'
+        });
+    </script>
+
+</body>
+</html>
